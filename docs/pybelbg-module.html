@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pybelbg</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://GitHub.com/mrJean1/PyBeLBG">pybelbg</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;pybelbg
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pybelbg-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PACKAGE DESCRIPTION ==================== -->
+<h1 class="epydoc">Package pybelbg</h1><p class="nomargin-top"></p>
+<p>A pure Python implementation of the <code>Belgian hybrid 
+  quasi-geoid</code> <a href="https://DOI.org/10.5880/isg.2018.003" 
+  target="_top">hBG18</a> with several Belgian <code>Lambert 2018</code>, 
+  <code>-1972s</code> and <code>-1950</code> conic projections to convert 
+  between geodetic lat-, longitudes and (ellipsoidal) height and local 
+  easting, northing and (orthometric) height based on bilinear 
+  interpolation of quasi-geoid <code>hBG18</code> heights.</p>
+
+<hr />
+<div class="fields">      <p><strong>Version:</strong>
+        26.07.27
+      </p>
+</div><!-- ==================== SUBMODULES ==================== -->
+<a name="section-Submodules"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Submodules</span></td>
+</tr>
+  <tr><td class="summary">
+  <ul class="nomargin">
+    <li class="private"> <strong class="uidlink"><a href="pybelbg.__main__-module.html">pybelbg.__main__</a></strong>: <em class="summary">Run some <code>Be*LBG</code><code>.forward</code> and 
+        <code>.reverse</code> conversion examples.</em>    </li>
+    <li class="private"> <strong class="uidlink"><a href="pybelbg.__pygeodesy-module.html" onclick="show_private();">pybelbg.__pygeodesy</a></strong>: <em class="summary">(INTERNAL) <code>pybelbg</code> access to some private 
+        <code>pygeodesy</code> attributes.</em>    </li>
+    <li class="private"> <strong class="uidlink"><a href="pybelbg.belbgs-module.html" onclick="show_private();">pybelbg.belbgs</a></strong>: <em class="summary">Main classes <a href="pybelbg.belbgs.Be08LBG-class.html" 
+        class="link">Be08LBG</a>, <a 
+        href="pybelbg.belbgs.Be72LBG-class.html" class="link">Be72LBG</a>, 
+        <a href="pybelbg.belbgs.Be72NLBG-class.html" 
+        class="link">Be72NLBG</a>, <a 
+        href="pybelbg.belbgs.Be72RLBG-class.html" class="link">Be72RLBG</a>
+        and <a href="pybelbg.belbgs.Be50LBG-class.html" class="link" 
+        onclick="show_private();">Be50LBG</a> implementing the 
+        <code>Belgian Lambert 2018</code>, <code>-1972</code>, 
+        <code>-1972N</code>, <code>-1972R</code> respectively 
+        <code>-1950</code> conic projection and quasi-geoid heights with 
+        bilinear interpolation from <code>Belgian hybrid quasi-geoid</code>
+        <a href="https://DOI.org/10.5880/isg.2018.003" 
+        target="_top">hBG18</a>.</em>    </li>
+  </ul></td></tr>
+</table>
+
+<br />
+<!-- ==================== CLASSES ==================== -->
+<a name="section-Classes"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Classes</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pybelbg.belbgs.Be08LBG-class.html" class="summary-name">Be08LBG</a><br />
+      Belgian Lambert 2008 <code>pygeodesy.Conics.Be08Lb</code> 
+        converter.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pybelbg.belbgs.Be50LBG-class.html" class="summary-name">Be50LBG</a><br />
+      Belgian Lambert 1950 <code>pygeodesy.Conics.Be50Lb</code> 
+        converter.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pybelbg.belbgs.Be72LBG-class.html" class="summary-name">Be72LBG</a><br />
+      Belgian Lambert 1972 <code>pygeodesy.Conics.Be72Lb</code> 
+        converter.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pybelbg.belbgs.Be72NLBG-class.html" class="summary-name">Be72NLBG</a><br />
+      Belgian Lambert 1972N <code>pygeodesy.Conics.Be72NLb</code> 
+        converter.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pybelbg.belbgs.Be72RLBG-class.html" class="summary-name">Be72RLBG</a><br />
+      Belgian Lambert 1972R <code>pygeodesy.Conics.Be72RLb</code> 
+        converter.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pybelbg.__pygeodesy.BeLBG7Tuple-class.html" class="summary-name">BeLBG7Tuple</a><br />
+      7-Tuple <code>(easting, northing, H, lat, lon, height, 
+        beLBG)</code> with <i>local</i> Belgian <code>easting</code>, 
+        <code>northing</code> and orthometric height <code>H</code>, 
+        geodetic <code>lat</code>, <code>lon</code> and ellipsoidal 
+        <code>height</code> and <code>beLBG</code> the <code>Be*LBG</code> 
+        instance with <code>lat</code> and <code>lon</code> in 
+        <code>degrees</code> and with <code>easting</code>, 
+        <code>northing</code>, <code>H</code> and <code>height</code> in 
+        <code>meter</code>, conventionally.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pybelbg.__pygeodesy.BeLBGError-class.html" class="summary-name">BeLBGError</a><br />
+      Error raised for <code>pybelbg</code>, <code>hBG18</code>, unzip 
+        and other issues.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pybelbg.__pygeodesy.EasNorH3Tuple-class.html" class="summary-name">EasNorH3Tuple</a><br />
+      3-Tuple <code>(easting, northing, H)</code>, all in 
+        <code>meter</code>, conventionally with orthometric height 
+        <code>H</code>.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pybelbg.__pygeodesy.Lb4Tuple-class.html" class="summary-name">Lb4Tuple</a><br />
+      4-Tuple <code>(minE, minN, maxE, maxN)</code> with local 
+        <code>Lambert</code> lower-left <code>(minE, minN)</code> and 
+        upper-right <code>(maxE, maxN)</code> bounds in <code>meter</code>,
+        conventionally.
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Functions</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pybelbg-module.html#machine" class="summary-sig-name">machine</a>()</span><br />
+      Return standard <code>platform.machine</code>, but distinguishing 
+      Intel <i>native</i> from Intel <i>emulation</i> on Apple Silicon (on 
+      macOS only).</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Variables</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pybelbg-module.html#pybelbg_abspath" class="summary-name">pybelbg_abspath</a> = <code title="'..../PyBeLBG/pybelbg'"><code class="variable-quote">'</code><code class="variable-string">..../PyBeLB</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pybelbg-module.html#Conics" class="summary-name">Conics</a> = <code title="Conics.Be72RLb: Conic(name='Be72RLb', lat0=90, lon0=4.35693972, par1=4\
+9.83333333, par2=51.16666667, E0=150000.01256, N0=5400088.4378, k0=1, \
+SP=2, datum=Datum(name='ED50', ellipsoid=Ellipsoids.Intl1924, transfor\
+m=Transforms.ED50)),
+Conics.Be50Lb: Conic(name='Be50Lb', lat0=90, lon0=4.36748667, par1=49.\
+83333333, par2=51.16666667, E0=150000, N0=5400000, k0=1, SP=2, datum=D\
+atum(name='ED50', ellipsoid=Ellipsoids.Intl1924, transform=Transforms.\
+ED50)),
+...">Conics.Be72RLb: Conic(name='Be72RLb', lat0=90, lon0=4<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pybelbg-module.html#Datums" class="summary-name">Datums</a> = <code title="Datums.Sphere: Datum(name='Sphere', ellipsoid=Ellipsoids.Sphere, trans\
+form=Transforms.WGS84),
+Datums.NAD83: Datum(name='NAD83', ellipsoid=Ellipsoids.GRS80, transfor\
+m=Transforms.NAD83),
+Datums.OSGB36: Datum(name='OSGB36', ellipsoid=Ellipsoids.Airy1830, tra\
+nsform=Transforms.OSGB36),
+Datums.ED50: Datum(name='ED50', ellipsoid=Ellipsoids.Intl1924, transfo\
+rm=Transforms.ED50),
+...">Datums.Sphere: Datum(name='Sphere', ellipsoid=Ellipso<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Function Details</span></td>
+</tr>
+</table>
+<a name="machine"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">machine</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return standard <code>platform.machine</code>, but distinguishing 
+  Intel <i>native</i> from Intel <i>emulation</i> on Apple Silicon (on 
+  macOS only).</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>Machine <code>'arm64'</code> for Apple Silicon <i>native</i>, 
+          <code>'x86_64'</code> for Intel <i>native</i>, 
+          <code>&quot;arm64_x86_64&quot;</code> for Intel <i>emulation</i>,
+          etc. (<code>str</code> with <code>comma</code>s replaced by 
+          <code>underscore</code>s).</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Variables Details</span></td>
+</tr>
+</table>
+<a name="pybelbg_abspath"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">pybelbg_abspath</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-quote">'</code><code class="variable-string">..../PyBeLBG/pybelbg</code><code class="variable-quote">'</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="Conics"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">Conics</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+Conics.Be72RLb: Conic(name='Be72RLb', lat0=90, lon0=4.35693972, par1=4<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+9.83333333, par2=51.16666667, E0=150000.01256, N0=5400088.4378, k0=1, <span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+SP=2, datum=Datum(name='ED50', ellipsoid=Ellipsoids.Intl1924, transfor<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+m=Transforms.ED50)),
+Conics.Be50Lb: Conic(name='Be50Lb', lat0=90, lon0=4.36748667, par1=49.<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+83333333, par2=51.16666667, E0=150000, N0=5400000, k0=1, SP=2, datum=D<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+atum(name='ED50', ellipsoid=Ellipsoids.Intl1924, transform=Transforms.<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ED50)),
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="Datums"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">Datums</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+Datums.Sphere: Datum(name='Sphere', ellipsoid=Ellipsoids.Sphere, trans<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+form=Transforms.WGS84),
+Datums.NAD83: Datum(name='NAD83', ellipsoid=Ellipsoids.GRS80, transfor<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+m=Transforms.NAD83),
+Datums.OSGB36: Datum(name='OSGB36', ellipsoid=Ellipsoids.Airy1830, tra<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+nsform=Transforms.OSGB36),
+Datums.ED50: Datum(name='ED50', ellipsoid=Ellipsoids.Intl1924, transfo<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+rm=Transforms.ED50),
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://GitHub.com/mrJean1/PyBeLBG">pybelbg</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Jul 28 16:25:40 2026
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
