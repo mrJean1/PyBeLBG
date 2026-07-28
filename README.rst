@@ -3,17 +3,17 @@
 PyBeLBG
 =======
 
-A pure Python implementation of the Belgian **hybrid quasi-geoid** hBG18_ with several Belgian C{Lambert
-2018}, C{-1972} and C{-1950} conic projections to convert between GRS80 (ETRS89) geodetic lat-, longitudes
-and (ellipsoidal) height ``h`` and local easting, northing and (orthometric) height ``H`` using bilinear
-interpolation of quasi-geoid hBG18_ heights.
+A pure Python implementation of the Belgian **hybrid quasi-geoid** hBG18_ with several Belgian ``Lambert
+2018``, ``-1972`` and ``-1950`` conformal conic projections to convert between geodetic lat-, longitude and
+ellipsoidal height and local ``Lambert`` easting, northing and orthometric height using bilinear interpolation
+of quasi-geoid hBG18_ heights.
 
-Each of 5 ``Be##LBG`` classes provides a ``forward`` method to transform a geodetic lat-, longitude and
-height C{h} to local easting, northing and ``H`` and a ``reverse`` method to convert a local easting,
-northing and height ``H`` to geodetic lat-, longitude and ``h``.
+Each of 5 ``Be*LBG`` transformer classes provides a ``forward`` method to convert a geodetic lat-, longitude
+and ellipsoidal height to local easting, northing and orthometric height (``H``) and a ``reverse`` method to
+transform local to geodetic coordinates and orthometric to ellipsoidal height.
 
-Quasi-geoid hBG18_ height is interpolated only for locations within the ``hBG18 region``.  Outside that
-region ``NAN`` is returned for heights ``H`` and ``h`` unless raising a ``BeLBGError`` is specified.
+Quasi-geoid hBG18_ height is interpolated only for locations within the ``hBG18 region``.  Heights outside that
+region are ``NAN`` unless raising a ``BeLBGError`` exception is specified.
 
 For further details see the documentation_ and the main_ module.
 
