@@ -1,6 +1,6 @@
 
 # python -m coverage html --rcfile=testcoverage.rc --title="..."
-# __version__ = '26.07.26'
+# __version__ = '26.07.28'
 
 [run]
 branch = True
@@ -19,7 +19,7 @@ exclude_lines =
 
 include =
     pybelbg/*.py
-#   pybelbg/hBG18z/*.py
+#   pybelbg/hBG18z.zip
 
 # omit = test/*.py
 

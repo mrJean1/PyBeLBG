@@ -1,6 +1,6 @@
 graft docs
 include docs.html
-include pybelbg/hBG18z.zip
+# include pybelbg/hBG18z.zip
 include requirements.txt
 graft test
 graft testcoverage

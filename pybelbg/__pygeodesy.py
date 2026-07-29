@@ -6,7 +6,7 @@ u'''(INTERNAL) C{pybelbg} access to some private C{pygeodesy} attributes.
 import os.path as os_path
 import sys  # PYCHOK used!
 
-_missing_ = 'missing'
+_missing_ = 'missing'  # PYCHOK used!
 _requires = '26.7.27'  # in README.rst, requirements.txt, setup.py
 
 
@@ -51,12 +51,12 @@ from pygeodesy.basics import _xinstanceof, _xsubclassof  # noqa: F401
 from pygeodesy.constants import (_1_0, _3600_0,  # noqa: F401
                                  _isNAN, _isNAN0)  # noqa: F401
 from pygeodesy.ellipsoidalBase import LatLonEllipsoidalBase as _LLEB  # noqa: F401
-from pygeodesy.errors import _ValueError, _xkwds, _xkwds_pop2  # noqa: F401
+from pygeodesy.errors import _ValueError, _xkwds  # noqa: F401
 from pygeodesy.internals import machine, _secs2str, _versions  # noqa: F401
-from pygeodesy.interns import (_COMMA_, _DASH_,  # noqa: F401
-                               _easting_, _H_, _height_, _lat_, _lon_, _name_,  # noqa: F401
-                               _NAN_, _NL_, _northing_, _SPACE_, _STAR_)  # noqa: F401
-from pygeodesy.lazily import _ALL_DOCS, _ALL_OTHER, _FOR_DOCS, import_module  # noqa: F401
+from pygeodesy.interns import (_COMMA_, _DASH_, _easting_,  # noqa: F401
+                               _H_, _height_, _lat_, _lon_, _N_,  # noqa: F401
+                               _name_, _northing_, _SPACE_)  # noqa: F401
+from pygeodesy.lazily import _ALL_DOCS, _ALL_OTHER, _FOR_DOCS  # noqa: F401
 from pygeodesy.named import _NamedBase, _NamedTuple, _Pass  # noqa: F401
 from pygeodesy.namedTuples import (EasNor2Tuple, LatLon2Tuple, PhiLam2Tuple,
                                   _isinside, _resize4)
@@ -144,6 +144,18 @@ class BeLBG7Tuple(_NamedTuple):
         return self.latlonheight.to4Tuple(self.datum)
 
     @Property_RO
+    def latlonNgeoid(self):
+        '''Get the lat-, longitude in C{degrees} and geoid height (L{LatLonN3Tuple}C{(lat, lon, N)}).
+        '''
+        return LatLonN3Tuple(self.lat, self.lon, self.N, name=self.name)
+
+    @Property_RO
+    def N(self):
+        '''Get the geoid height C{N} (C{meter}, conventionally).
+        '''
+        return Height(N=self.height - self.H)
+
+    @Property_RO
     def phi(self):
         '''Get the latitude (B{C{radians}}).
         '''
@@ -184,27 +196,27 @@ class BeLBG7Tuple(_NamedTuple):
 #       return self.dup(lat=g.lat, lon=g.lon, datum=g.datum, height=h,
 #                                             name=name or self.name)
 
-    def toLatLon(self, LatLon, **LatLon_kwds):
-        '''Return this C{lat}, C{lon}, C{datum} and C{height} as B{C{LatLon}}.
-
-           @arg LatLon: An ellipsoidal C{LatLon} class (C{pygeodesy.ellipsoidal*}).
-           @kwarg LatLon_kwds: Optional, additional B{C{LatLon}} keyword arguments.
-
-           @return: An B{C{LatLon}} instance.
-
-           @raise TypeError: B{C{LatLon}} not ellipsoidal or an other issue.
-        '''
-        _xsubclassof(_LLEB, LatLon=LatLon)
-        h    = _isNAN0(self.height)  # PYCHOK height
-        kwds = _xkwds(LatLon_kwds, name=self.name, height=h)
-        return LatLon(self.lat, self.lon, datum=self.datum, **kwds)  # PYCHOK datum
+#   def toLatLon(self, LatLon, **LatLon_kwds):
+#       '''Return this C{lat}, C{lon}, C{datum} and C{height} as B{C{LatLon}}.
+#
+#          @arg LatLon: An ellipsoidal C{LatLon} class (C{pygeodesy.ellipsoidal*}).
+#          @kwarg LatLon_kwds: Optional, additional B{C{LatLon}} keyword arguments.
+#
+#          @return: An B{C{LatLon}} instance.
+#
+#          @raise TypeError: B{C{LatLon}} not ellipsoidal or an other issue.
+#       '''
+#       _xsubclassof(_LLEB, LatLon=LatLon)
+#       h    = _isNAN0(self.height)  # PYCHOK height
+#       kwds = _xkwds(LatLon_kwds, name=self.name, height=h)
+#       return LatLon(self.lat, self.lon, datum=self.datum, **kwds)  # PYCHOK datum
 
 #   @Property_RO
 #   def xy(self):
 #       '''Get the I{local} easting, northing) coordinates (L{Vector2Tuple}C{(x, y)}).
 #       '''
 #       return Vector2Tuple(self.easting, self.northing, name=self.name)
-#
+
 #   @Property_RO
 #   def xyz(self):
 #       '''Get the I{local} easting, northing and (orthometric) height (L{Vector3Tuple}C{(x, y, z)}).
@@ -212,12 +224,19 @@ class BeLBG7Tuple(_NamedTuple):
 #       return Vector3Tuple(self.easting, self.northing, self.H, name=self.name)
 
 
-class EasNorH3Tuple(EasNor2Tuple):
+class EasNorH3Tuple(_NamedTuple):  # XXX move to pygeodesy
     '''3-Tuple C{(easting, northing, H)}, all in C{meter}, conventionally
        with orthometric height C{H}.
     '''
     _Names_ = EasNor2Tuple._Names_ + (_H_,)
     _Units_ = EasNor2Tuple._Units_ + (Height,)
+
+
+class LatLonN3Tuple(_NamedTuple):  # XXX move to pygeodesy
+    '''3-tuple C{(lat, lon, N)} with geoid height C{N} in C{meter}, conventionally.
+    '''
+    _Names_ = (_lat_, _lon_, _N_)
+    _Units_ = ( Lat,   Lon,   Height)
 
 
 class Lb4Tuple(_NamedTuple):
@@ -252,39 +271,6 @@ class Lb4Tuple(_NamedTuple):
         return _resize4(self, Meter(eps=eps))
 
 
-def _zip_import(m):
-    '''(INTERNAL) Try "from pybelbg.<m>z.zip import <m>"
-    '''
-    d = os_path.dirname(__file__)
-    d = os_path.abspath(d)  # pybelgb_abspath
-    p = os_path.join(d, m + 'z.zip')
-    g = None
-    try:  # Py 3.4+
-        # <https://RealPython.com/python-zip-import/
-        # #explore-pythons-zipimport-the-tool-behind-zip-imports>
-        from zipimport import zipimporter as Z  # ZipImportError
-        # get an importer for zip file p and load module m
-        g = Z(p).load_module(m)  # Py3.14-
-        # XXX should use .exec_module but that fails and/or
-        # XXX needs .create_module, .find_spec, etc???
-    except (AttributeError, ImportError):
-        try:  # trusted old-fashion way
-            sys.path.insert(0, p)
-            g = import_module(m)
-#       except ImportError:
-#           g = None
-        finally:
-            try:
-                sys.path.remove(p)
-            except ValueError:
-                pass  # AssertionError
-    if not g:
-        p = 'module %s' % (p,)
-        raise BeLBGError(p, txt=_missing_)
-#   sys.modules[m] = g
-    return g
-
-
 def _all_OTHER(*objs):  # PYCHOK shared
     # collect all __all__ lists or tuples
     _all = _ALL_OTHER(*objs)
@@ -293,8 +279,9 @@ def _all_OTHER(*objs):  # PYCHOK shared
 
 _all__all__ = []  # PYCHOK in .__init__
 
-__all__ = _all_OTHER(machine, BeLBGError, BeLBG7Tuple, Datums, EasNorH3Tuple, Lb4Tuple)
-__version__ = '26.07.27'
+__all__ = _all_OTHER(machine, BeLBGError, BeLBG7Tuple, Datums,
+                              EasNorH3Tuple, LatLonN3Tuple, Lb4Tuple)
+__version__ = '26.07.28'
 
 # **) MIT License
 #

@@ -13,7 +13,7 @@ from random import random, seed
 from time import localtime
 
 __all__ = ()
-__version__ = '26.07.27'
+__version__ = '26.07.28'
 
 # random repeatable all day
 seed(localtime().tm_yday)
@@ -42,24 +42,37 @@ def _str(t, ndigits=8):
 
 class Tests(TestsBase):
 
-    def testLatLon(self, B):
+    def testBe_LBG(self, B):
+        t = B.toStr()
+        self.test('Be_LBG', t, t, nl=1)
+
+        t = B.region4().toRepr()
+        self.test(B.name, t, t)
+        t = B.bounds4().toRepr()
+        self.test(B.name, t, t, nt=1)
+
+        t = B.region4(True).toRepr()
+        self.test(B.name, t, t)
+        t = B.bounds4(True).toRepr()
+        self.test(B.name, t, t, nt=1)
+
         self.test(B.name, 'Antwerp', 'Antwerp')
         self.testRndTrip(B, 51.21989, 4.40346,
-                            e_n='(652419.16905189, 712216.88762658)')
+                            eas_nor='(652419.16905189, 712216.88762658)')
         U = B.Uccle
         self.test(B.name, U.name, U.name)
-        self.testRndTrip(B, U.lat, U.lon,
-                            e_n=U.eastingnorthing.toStr(prec=8))
+        self.testRndTrip(B, U.lat, U.lon, U.height,
+                            eas_nor=U.eastingnorthing.toStr(prec=8))
         self.test(B.name, 'Maastricht', 'Maastricht')
         self.testRndTrip(B, 50.851368, 5.690973,
-                            e_n='(743103.01343191, 672060.17452257)')
+                            eas_nor='(743103.01343191, 672060.17452257)')
         self.test(B.name, 'Rotterdam', 'Rotterdam')
         self.testRndTrip(B, 51.9225, 4.47917,
-                            e_n='(657582.42979196, 790403.36687921)')
+                            eas_nor='(657582.42979196, 790403.36687921)')
         # Z001_ETRS89andRDNAP.txt first point
         self.test(B.name, 'id 30010000', 'id 30010000')
         self.testRndTrip(B, 51.728601274, 4.712120126, 301.7981,
-                            e_n='(673714.94919006, 768876.34323137)')  # 258.0057
+                            eas_nor='(673714.94919006, 768876.34323137)')  # 258.0057
 
     def testRandom(self, B, **nl):
         S, W, N, E = B.bounds4()
@@ -161,14 +174,14 @@ class Tests(TestsBase):
                     fabs(t.lon - r.lon))
             self.test('reverse', t, r, error=e, known=e < 1e-10)
 
-    def testRndTrip(self, B, lat, lon, h=NAN, e_n=None):
+    def testRndTrip(self, B, lat, lon, h=NAN, eas_nor=None):
         llh = lat, lon, h
         f =  B.forward(*llh)
         s = _str(f)  # partial
         self.test('forward', s, s)
-        if e_n:
+        if eas_nor:
             k = f.H is NAN or type(B) is not Be08LBG
-            self.test('e_n', _str(f.eastingnorthing), e_n, known=k)
+            self.test('eas_nor', _str(f.eastingnorthing), eas_nor, known=k)
 
         r =  B.reverse(*f.eastingnorthingHeight)
         s = _str(r)
@@ -185,14 +198,35 @@ class Tests(TestsBase):
         k = f.H is NAN or r.lat is NAN or r.lon is NAN
         t = _rnd(lat),   _rnd(lon)
         r = _rnd(r.lat), _rnd(r.lon)
-        self.test('x3', r, t, known=k, nt=1)
+        self.test('rounded', r, t, known=k, nt=1)
 
-    def testUccle(self, B):
-        u = B.Uccle
-        self.test(B.name, u.name, 'Uccle', nl=1)
+    def testUccle_(self, B):
+        u = B.Uccle.toUnits()
+        self.test('Uccle_', u.name, 'Uccle', nl=1)
         self.testRndTrip(B, u.lat, u.lon, 0)
         self.testRndTrip(B, u.lat, u.lon, u.height)
         self.testRndTrip(B, u.lat, u.lon, u.H)
+
+        for a, x in (('beLBG', 'Be'),
+                     ('datum', 'Datum'),
+                     ('easting', 'easting'),
+                     ('eastingnorthing', 'Uccle'),
+                     ('eastingnorthingHeight', 'Uccle'),
+                     ('H', 'H'),
+                     ('height', 'height'),
+                     ('lam', 'lon'),  # lam?
+                     ('lat', 'lat'),
+                     ('latlon', 'Uccle'),
+                     ('latlonheight', 'Uccle'),
+                     ('latlonheightdatum', 'Uccle'),
+                     ('latlonNgeoid', 'Uccle'),
+                     ('northing', 'northing'),
+                     ('phi', 'lat'),  # phi?
+                     ('philam', 'Uccle'),
+                     ('philamheight', 'Uccle'),
+                     ('philamheightdatum', 'Uccle')):
+            t = getattr(u, a, None)
+            self.test(a, t.toRepr(), x, known=startswith)
 
 
 if __name__ == '__main__':
@@ -200,9 +234,12 @@ if __name__ == '__main__':
     t = Tests(__file__, __version__)
     for B in (Be72LBG, Be72NLBG, Be72RLBG, Be50LBG, Be08LBG):
         B = B(name=typename(B))
-        t.testLatLon(B)
+        t.testBe_LBG(B)
         t.testRandom(B)
-        t.testUccle(B)
+        t.testUccle_(B)
+
+    b = B._bounds4BeNeLux.toRepr()  # Be08LBG
+    t.test(B.name, b, b, nl=1)
 
     t.testRD11(B)  # Be08LBG
     t.testRD11(Be08LBG(datum=Datums.WGS84, name='BeWGS84'))

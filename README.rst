@@ -65,7 +65,7 @@ All Python source code has been statically checked_ with Ruff_ using Python 3.13
 PyChecker_, PyFlakes_, PyCodeStyle_ (formerly Pep8) and McCabe_ using Python 2.7.18, both in
 64-bit on macOS 26.5.2 Tahoe only.
 
-*Last updated: July 27, 2026.*
+*Last updated: July 29, 2026.*
 
 License
 =======
@@ -92,7 +92,7 @@ DEALINGS IN THE SOFTWARE.
   :target: https://PyPI.org/project/pybelbg
 .. image:: https://Img.Shields.io/appveyor/ci/mrJean1/PyBeLBG.svg?branch=master&label=AppVeyor
   :target: https://CI.AppVeyor.com/project/mrJean1/PyBeLBG/branch/master
-.. image:: https://Img.Shields.io/badge/coverage-90%25-brightgreen
+.. image:: https://Img.Shields.io/badge/coverage-96%25-brightgreen
   :target: https://GitHub.com/mrJean1/PyBeLBG/blob/master/testcoverage.pdf
 .. image:: https://Img.Shields.io/pypi/wheel/pybelbg.svg
   :target: https://PyPI.org/project/pybelbg/#files

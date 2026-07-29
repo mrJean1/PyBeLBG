@@ -7,7 +7,7 @@ from os import getenv
 from setuptools import setup
 
 __all__ = ()
-__version__ = '26.07.27'
+__version__ = '26.07.28'
 
 _PACKAGE = 'pybelbg'  # 'PyBeLBG'
 
@@ -83,7 +83,7 @@ setup(name=_PACKAGE,
 
       long_description=_long_description(),
 
-      package_data={_PACKAGE: ['hBG18z.zip', 'LICENSE']},
+      package_data={_PACKAGE: ['LICENSE']},  # 'hBG18z.zip',
 
 #     test_suite='test.TestSuite',
 

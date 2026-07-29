@@ -19,12 +19,12 @@ or raise a L{BeLBGError}.
 # make sure int/int division yields float quotient in Py2-
 from __future__ import division as _; del _  # noqa: E702 ;
 
-from pybelbg.__pygeodesy import (BeLBGError, BeLBG7Tuple, Lb4Tuple, _zip_import,
+from pybelbg.__pygeodesy import (BeLBGError, BeLBG7Tuple, LatLonN3Tuple, Lb4Tuple,
                                 _1_0, _3600_0, _isNAN, _name_,
                                 _ALL_DOCS, _all_OTHER, _FOR_DOCS,
                                 _isinside, _NamedBase, _NamedTuple)
-from pybelbg.__pygeodesy import _COMMA_  # PYCHOK used!
-from pygeodesy import (typename, NAN,  # "consterns"
+from pybelbg.__pygeodesy import _COMMA_, _SPACE_  # PYCHOK used!
+from pygeodesy import (typename, NAN, NN,  # "consterns"
                        Conics, Bounds4Tuple,  # lcc, namedTuples
                        property_RO, property_ROver,  # props
                        Degrees, Easting, Height, Lat, Lon, Northing)  # units
@@ -32,7 +32,7 @@ from pygeodesy import (typename, NAN,  # "consterns"
 from math import ceil, floor
 
 __all__ = ()
-__version__ = '26.07.27'
+__version__ = '26.07.28'
 
 _bounds__   = ' bounds '
 _forward_   = 'forward'
@@ -74,12 +74,12 @@ class _BeLBGbase(_NamedBase):
 #           if not T.isunity:
 #               raise BeLBGError(repr(T), txt='not unity')
 
-    def _as4Lb(self, t4):
+    def _as4Lb(self, t4, name=NN):
         # return C{t4} as L{Lb4Tuple}
         S, W, N, E = t4
         s, w, _ = self._forward3(False, S, W, None)
         n, e, _ = self._forward3(False, N, E, None)
-        return Lb4Tuple(s, w, n, e, name=t4.name)
+        return Lb4Tuple(s, w, n, e, name=name or t4.name)
 
     def _belowError(self, raiser, coords, bounds2):
         # throw a below bounds2 exception if requested
@@ -179,7 +179,7 @@ class _BeLBGbase(_NamedBase):
            @arg lat: Latitude (C{degrees}, geodetic).
            @arg lon: Longitude (C{degrees}, geodetic).
            @kwarg height: The (ellipsoidal) height (C{meter}, conventionally) or
-                          C{None} or C{NAN} to ignore C{hBGh} interpolation.
+                          C{None} to ignore C{hBGh} interpolation.
 
            @return: A L{BeLBG7Tuple}C{(easting, northing, H, lat, lon, height, beLBG)}
                     with C{easting}, C{northing} and (orthometric) height C{H} in
@@ -188,11 +188,11 @@ class _BeLBGbase(_NamedBase):
            @raise BeLBGError: If the point is outside the C{BG} region and property
                               C{raiser is True} or keyword argument C{B{raiser}=True}.
 
-           @note: C{H}, C{easting} and C{northing} will all be C{NAN} if B{C{lat}} is
-                  south or B{C{lon}} is east of this converter's L{bounds4}.
+           @note: C{H}, C{easting} and C{northing} will all be C{NAN} if B{C{lat}} or
+                  B{C{lon}} is below this converter's L{bounds4}.
 
-           @note: Orthometric height C{(H = h - hBGh)} euals ellipsoidal height C{h}
-                  less the hybrid quasi-geoid height C{hBGh}.
+           @note: Orthometric height C{(H = h - N)} euals ellipsoidal height C{h}
+                  less (hybrid quasi-) geoid height C{N}.
         '''
         lat, lon, _NAN, raiser, name = self._LatLon5(lat, lon, **raiser_name)
         if _NAN:
@@ -209,37 +209,49 @@ class _BeLBGbase(_NamedBase):
         return e, n, H
 
     def hBGh(self, lat, lon):
-        '''Interpolate the hybrid quasi-geoid C{hBG} height C{hBGh}.
+        '''Interpolate the hybrid quasi-geoid C{hBG} height C{N}.
 
            @arg lat: Latitude (C{degrees}, geodetic).
            @arg lon: Longitude (C{degrees}, geodetic).
 
            @return: The hybrid quasi-geoid height (C{meter}) or C{NAN} if
-                    B{C{lat}} or B{C{lon}} is outside the C{hBG} region.
+                    B{C{lat}} or B{C{lon}} is outside L{region4}.
         '''
         lat, lon, _NAN, _, _ = self._LatLon5(lat, lon, False)
         return NAN if _NAN else self._hBGh(lat, lon)
 
     def _hBGh(self, lat, lon, raiser=False):
-        # return C{hBGh} at C{(lat, lon)} or C{NAN} if
+        # interpolate C{N} at C{(lat, lon)} or C{NAN} if
         # outside or ... if _isNAN(lat) or _isNAN(lon)
         if _isinside(lat, lon, 0, _region4hBG):
             c_f_N_f6 = self._c_f_N_f6(lat, lon)
             N = _bilinear(self._hBG18, *c_f_N_f6)
-            N =  Height(hBGh=N)
+            N =  Height(N=N)
         elif raiser or (raiser is None and self._raiser):
             raise self._outsidError(lat, lon)
         else:
             N =  NAN
         return N
 
+    def hBGh3(self, easting, northing):
+        '''Interpolate the hybrid quasi-geoid C{hBG} height C{N}.
+
+           @arg easting: Easting (C{meter}).
+           @arg northing: Northing (C{meter}).
+
+           @return: L{LatLonN3Tuple}C{(lat, lon, N)} with the (hybrid
+                    quasi-) geoid height C{N} in C{meter} or C{NAN} if
+                    C{lat} or C{lon} is outside C{region4}.
+        '''
+        r = self.reverse(easting, northing, H=0, raiser=False)
+        return LatLonN3Tuple(r.lat, r.lon, r.height)
+
     @property_ROver
     def _hBG18(self):  # load the hBG18 geoid, I{once}
-        # from pybelgb.hBG18 import _hBG18
-        hBG = _zip_import('hBG18')._hBG18
+        from pybelbg.hBG18 import _hBG18 as hBG
         S, W, N, E = _region4hBG
-        assert int((N - S) / self._latD + _1_0) == len(hBG)
-        assert int((E - W) / self._lonD + _1_0) == len(hBG)
+        assert int(_degN(N, S, self._latD) + _1_0) == len(hBG)
+        assert int(_degN(E, W, self._lonD) + _1_0) == len(hBG)
         return hBG
 
     def isinside(self, lat, lon, eps=0):
@@ -305,7 +317,9 @@ class _BeLBGbase(_NamedBase):
 
     @property_RO
     def _region4Lb(self):  # overwrite class._region4Lb
-        r = self._as4Lb(_region4hBG)
+        n = _region4hBG.name.split()
+        n = _SPACE_(typename(self), *n[1:])
+        r =  self._as4Lb(_region4hBG, name=n)
         self.__class__._region4Lb = r
         return r
 
@@ -316,7 +330,7 @@ class _BeLBGbase(_NamedBase):
            @arg easting: Easting (C{meter}, geodetic).
            @arg northing: Northing (C{meter}, geodetic).
            @kwarg H: The (orthometric) height (C{meter}, conventionally) or C{None}
-                     or C{NAN} to ignore C{hBGh} interpolation.
+                     to ignore C{hBGh} interpolation.
 
            @return: A L{BeLBG7Tuple}C{(easting, northing, H, lat, lon, height, beLBG)}
                     with geodetic C{lat} and C{lon} and (ellipsoidal) C{height} in
@@ -326,10 +340,10 @@ class _BeLBGbase(_NamedBase):
                               C{raiser is True} or keyword argument C{B{raiser}=True}.
 
            @note: All C{lon}, C{lat} and C{height} will be C{NAN} if B{C{easting}} or
-                  B{C{northing}} is below this converter's L{bounds4(asLb)}.
+                  B{C{northing}} is below this converter's C{bounds4(asLb)}.
 
-           @note: Ellipsoidal height C{(h = H + hBGh)} equals orthometric height C{H}
-                  plus the hybrid quasi-geoid height C{hBGh}.
+           @note: Ellipsoidal height C{(h = H + N)} equals orthometric height C{H}
+                  plus (hybrid quasi-) geoid height C{N}.
         '''
         e, n, _NAN, raiser, name = self._EasNor5(easting, northing, **raiser_name)
         if _NAN:
@@ -352,7 +366,7 @@ class _BeLBGbase(_NamedBase):
 
            @return: This C{Be*LBG} (C{str}).
         '''
-        return self.attrs(_name_, 'conic', 'raiser', prec=prec)  # _datum_
+        return self.attrs(_name_, 'conic', 'raiser', prec=prec)  # _datum_, _Uccle_
 
     @property_RO
     def Uccle(self):  # overwrite class.Uccle
@@ -436,7 +450,7 @@ class _Lb2Tuple(_NamedTuple):
 
 def _bilinear(hBG, c_latI, f_latI, latN_f,
                    c_lonI, f_lonI, lonN_f):
-    # interpolate hybrid quasi-geoid C{hBG} height C{hBGh}
+    # interpolate hybrid quasi-geoid C{hBG} height
     ne, nw = hBG(c_latI, c_lonI, f_lonI)
     se, sw = hBG(f_latI, c_lonI, f_lonI)
     lonN_f1 = _1_0 - lonN_f  # == 1 - (lonN - f_lonN)
@@ -464,7 +478,7 @@ def _degN(deg, degSW, degD):
     return (deg - degSW) / degD
 
 
-_Be5LBGs = Be08LBG, Be72LBG, Be72NLBG, Be72RLBG, Be50LBG  # in .test.testRndTrips
+_Be5LBGs = Be08LBG, Be72LBG, Be72NLBG, Be72RLBG, Be50LBG
 
 if _FOR_DOCS:
     # for epydoc to include __doc__ for all classes
@@ -474,21 +488,14 @@ if _FOR_DOCS:
         B.datum    = _BeLBGbase.datum
         B.forward  = _BeLBGbase.forward
         B.hBGh     = _BeLBGbase.hBGh
+        B.hBGh3    = _BeLBGbase.hBGh3
         B.isinside = _BeLBGbase.isinside
         B.region4  = _BeLBGbase.region4
         B.reverse  = _BeLBGbase.reverse
 
 __all__ += _ALL_DOCS(_BeLBGbase)
 __all__ += _all_OTHER(Conics, *_Be5LBGs)
-del _ALL_DOCS, _all_OTHER
-
-if __name__ == '__main__':
-    for B in _Be5LBGs:
-        b = B(name=typename(B))
-        print(b.bounds4().toRepr(), b.bounds4(True).toRepr())
-        print(b.region4().toRepr(), b.region4(True).toRepr())
-        print(b.Uccle.eastingnorthingHeight.toRepr(), '\n')
-    print(Be08LBG()._bounds4BeNeLux.toRepr())
+del _ALL_DOCS, _all_OTHER, _Be5LBGs
 
 # **) MIT License
 #

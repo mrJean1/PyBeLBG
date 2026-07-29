@@ -136,7 +136,27 @@ pygeodesy.named._NamedBase --+
         <span class="summary-sig-arg">lat</span>,
         <span class="summary-sig-arg">lon</span>)</span><br />
       Interpolate the hybrid quasi-geoid <code>hBG</code> height 
-      <code>hBGh</code>.</td>
+      <code>N</code>.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pybelbg.belbgs.Be08LBG-class.html#hBGh3" class="summary-sig-name">hBGh3</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">easting</span>,
+        <span class="summary-sig-arg">northing</span>)</span><br />
+      Interpolate the hybrid quasi-geoid <code>hBG</code> height 
+      <code>N</code>.</td>
           <td align="right" valign="top">
             
             
@@ -363,8 +383,7 @@ pygeodesy.named._NamedBase --+
         <li><strong class="pname"><code>lat</code></strong> - Latitude (<code>degrees</code>, geodetic).</li>
         <li><strong class="pname"><code>lon</code></strong> - Longitude (<code>degrees</code>, geodetic).</li>
         <li><strong class="pname"><code>height</code></strong> - The (ellipsoidal) height (<code>meter</code>, conventionally) or 
-          <code>None</code> or <code>NAN</code> to ignore <code>hBGh</code>
-          interpolation.</li>
+          <code>None</code> to ignore <code>hBGh</code> interpolation.</li>
     </ul></dd>
     <dt>Returns:</dt>
         <dd>A <a href="pybelbg.__pygeodesy.BeLBG7Tuple-class.html" 
@@ -387,15 +406,15 @@ pygeodesy.named._NamedBase --+
       <ul class="nomargin-top">
         <li>
         <code>H</code>, <code>easting</code> and <code>northing</code> will
-        all be <code>NAN</code> if <b><code>lat</code></b> is south or 
-        <b><code>lon</code></b> is east of this converter's <a 
+        all be <code>NAN</code> if <b><code>lat</code></b> or 
+        <b><code>lon</code></b> is below this converter's <a 
         href="pybelbg.belbgs.Be08LBG-class.html#bounds4" 
         class="link">bounds4</a>.
         </li>
         <li>
-        Orthometric height <code>(H = h - hBGh)</code> euals ellipsoidal 
-        height <code>h</code> less the hybrid quasi-geoid height 
-        <code>hBGh</code>.
+        Orthometric height <code>(H = h - N)</code> euals ellipsoidal 
+        height <code>h</code> less (hybrid quasi-) geoid height 
+        <code>N</code>.
         </li>
       </ul>
 </div></td></tr></table>
@@ -417,7 +436,7 @@ pygeodesy.named._NamedBase --+
   </tr></table>
   
   <p>Interpolate the hybrid quasi-geoid <code>hBG</code> height 
-  <code>hBGh</code>.</p>
+  <code>N</code>.</p>
   <dl class="fields">
     <dt>Arguments:</dt>
     <dd><ul class="nomargin-top">
@@ -427,9 +446,47 @@ pygeodesy.named._NamedBase --+
     <dt>Returns:</dt>
         <dd>The hybrid quasi-geoid height (<code>meter</code>) or 
           <code>NAN</code> if <b><code>lat</code></b> or 
-          <b><code>lon</code></b> is outside the <code>hBG</code> region.</dd>
+          <b><code>lon</code></b> is outside <a 
+          href="pybelbg.belbgs.Be08LBG-class.html#region4" 
+          class="link">region4</a>.</dd>
     <dt>Overrides:
         <a href="pybelbg.belbgs._BeLBGbase-class.html#hBGh">_BeLBGbase.hBGh</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="hBGh3"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">hBGh3</span>&nbsp;(<span class="sig-arg">self</span>,
+        <span class="sig-arg">easting</span>,
+        <span class="sig-arg">northing</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Interpolate the hybrid quasi-geoid <code>hBG</code> height 
+  <code>N</code>.</p>
+  <dl class="fields">
+    <dt>Arguments:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>easting</code></strong> - Easting (<code>meter</code>).</li>
+        <li><strong class="pname"><code>northing</code></strong> - Northing (<code>meter</code>).</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd><a href="pybelbg.__pygeodesy.LatLonN3Tuple-class.html" 
+          class="link">LatLonN3Tuple</a><code>(lat, lon, N)</code> with the
+          (hybrid quasi-) geoid height <code>N</code> in <code>meter</code>
+          or <code>NAN</code> if <code>lat</code> or <code>lon</code> is 
+          outside <code>region4</code>.</dd>
+    <dt>Overrides:
+        <a href="pybelbg.belbgs._BeLBGbase-class.html#hBGh3">_BeLBGbase.hBGh3</a>
     </dt>
   </dl>
 </td></tr></table>
@@ -550,8 +607,7 @@ pygeodesy.named._NamedBase --+
         <li><strong class="pname"><code>easting</code></strong> - Easting (<code>meter</code>, geodetic).</li>
         <li><strong class="pname"><code>northing</code></strong> - Northing (<code>meter</code>, geodetic).</li>
         <li><strong class="pname"><code>H</code></strong> - The (orthometric) height (<code>meter</code>, conventionally) or 
-          <code>None</code> or <code>NAN</code> to ignore <code>hBGh</code>
-          interpolation.</li>
+          <code>None</code> to ignore <code>hBGh</code> interpolation.</li>
     </ul></dd>
     <dt>Returns:</dt>
         <dd>A <a href="pybelbg.__pygeodesy.BeLBG7Tuple-class.html" 
@@ -575,14 +631,13 @@ pygeodesy.named._NamedBase --+
         <li>
         All <code>lon</code>, <code>lat</code> and <code>height</code> will
         be <code>NAN</code> if <b><code>easting</code></b> or 
-        <b><code>northing</code></b> is below this converter's <a 
-        href="pybelbg.belbgs.Be08LBG-class.html#bounds4" 
-        class="link">bounds4(asLb)</a>.
+        <b><code>northing</code></b> is below this converter's 
+        <code>bounds4(asLb)</code>.
         </li>
         <li>
-        Ellipsoidal height <code>(h = H + hBGh)</code> equals orthometric 
-        height <code>H</code> plus the hybrid quasi-geoid height 
-        <code>hBGh</code>.
+        Ellipsoidal height <code>(h = H + N)</code> equals orthometric 
+        height <code>H</code> plus (hybrid quasi-) geoid height 
+        <code>N</code>.
         </li>
       </ul>
 </div></td></tr></table>
@@ -619,7 +674,7 @@ pygeodesy.named._NamedBase --+
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Tue Jul 28 16:25:40 2026
+    Generated by Epydoc 3.0.1 on Wed Jul 29 13:27:29 2026
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"

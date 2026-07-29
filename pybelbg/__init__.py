@@ -48,7 +48,7 @@ def _versions():  # in .__main__, .v_self, .test/bases
 
 
 __all__ = _all__init__('pybelbg_abspath')
-__version__ = '26.07.27'
+__version__ = '26.07.29'
 # del _all__init__
 
 # **) MIT License
