@@ -63,7 +63,7 @@ from pygeodesy.namedTuples import (EasNor2Tuple, LatLon2Tuple, PhiLam2Tuple,
 from pygeodesy.streprs import Fmt  # noqa: F401
 
 from pygeodesy import (Datums, Easting, Height, Lamd, Lat, Lon, Meter,
-                       Northing, Phid, Property_RO)
+                       NAN, Northing, Phid, Property_RO)
 
 
 class BeLBGError(_ValueError):
@@ -153,7 +153,8 @@ class BeLBG7Tuple(_NamedTuple):
     def N(self):
         '''Get the geoid height C{N} (C{meter}, conventionally).
         '''
-        return Height(N=self.height - self.H)
+        N = self.height - self.H
+        return NAN if _isNAN(N) else Height(N=N)
 
     @Property_RO
     def phi(self):
@@ -224,7 +225,7 @@ class BeLBG7Tuple(_NamedTuple):
 #       return Vector3Tuple(self.easting, self.northing, self.H, name=self.name)
 
 
-class EasNorH3Tuple(_NamedTuple):  # XXX move to pygeodesy
+class EasNorH3Tuple(_NamedTuple):
     '''3-Tuple C{(easting, northing, H)}, all in C{meter}, conventionally
        with orthometric height C{H}.
     '''
@@ -281,7 +282,7 @@ _all__all__ = []  # PYCHOK in .__init__
 
 __all__ = _all_OTHER(machine, BeLBGError, BeLBG7Tuple, Datums,
                               EasNorH3Tuple, LatLonN3Tuple, Lb4Tuple)
-__version__ = '26.07.28'
+__version__ = '26.07.29'
 
 # **) MIT License
 #

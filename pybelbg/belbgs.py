@@ -209,13 +209,13 @@ class _BeLBGbase(_NamedBase):
         return e, n, H
 
     def hBGh(self, lat, lon):
-        '''Interpolate the hybrid quasi-geoid C{hBG} height C{N}.
+        '''Interpolate the hybrid quasi-geoid C{hBG} height for a geodetic point.
 
            @arg lat: Latitude (C{degrees}, geodetic).
            @arg lon: Longitude (C{degrees}, geodetic).
 
-           @return: The hybrid quasi-geoid height (C{meter}) or C{NAN} if
-                    B{C{lat}} or B{C{lon}} is outside L{region4}.
+           @return: Hybrid quasi-geoid C{hBG} height C{N} (C{meter}) or C{NAN}
+                    if B{C{lat}} or B{C{lon}} is outside L{region4}.
         '''
         lat, lon, _NAN, _, _ = self._LatLon5(lat, lon, False)
         return NAN if _NAN else self._hBGh(lat, lon)
@@ -234,17 +234,17 @@ class _BeLBGbase(_NamedBase):
         return N
 
     def hBGh3(self, easting, northing):
-        '''Interpolate the hybrid quasi-geoid C{hBG} height C{N}.
+        '''Interpolate the hybrid quasi-geoid C{hBG} height for a local point.
 
-           @arg easting: Easting (C{meter}).
-           @arg northing: Northing (C{meter}).
+           @arg easting: Easting (C{meter}, local).
+           @arg northing: Northing (C{meter}, local).
 
            @return: L{LatLonN3Tuple}C{(lat, lon, N)} with the (hybrid
-                    quasi-) geoid height C{N} in C{meter} or C{NAN} if
-                    C{lat} or C{lon} is outside C{region4}.
+                    quasi-) geoid C{hBG} height C{N} in C{meter} or
+                    C{NAN} if C{lat} or C{lon} is outside C{region4}.
         '''
         r = self.reverse(easting, northing, H=0, raiser=False)
-        return LatLonN3Tuple(r.lat, r.lon, r.height)
+        return LatLonN3Tuple(r.lat, r.lon, r.height, name=self.name)
 
     @property_ROver
     def _hBG18(self):  # load the hBG18 geoid, I{once}
@@ -327,8 +327,8 @@ class _BeLBGbase(_NamedBase):
         '''Convert local B{C{easting}}, B{C{northing}} and (orthometric) height
            B{C{H}} to geodetic C{lat-}, C{longitude} and (ellipsoidal) C{height}.
 
-           @arg easting: Easting (C{meter}, geodetic).
-           @arg northing: Northing (C{meter}, geodetic).
+           @arg easting: Easting (C{meter}, local).
+           @arg northing: Northing (C{meter}, local).
            @kwarg H: The (orthometric) height (C{meter}, conventionally) or C{None}
                      to ignore C{hBGh} interpolation.
 

@@ -7,13 +7,14 @@ from bases import Datums, TestsBase, NAN, startswith, typename
 
 from pybelbg import (Be08LBG, Be72LBG, Be72NLBG, Be72RLBG, Be50LBG,
                      BeLBG7Tuple)
+from pybelbg.belbgs import _isNAN
 
 from math import fabs
 from random import random, seed
 from time import localtime
 
 __all__ = ()
-__version__ = '26.07.28'
+__version__ = '26.07.29'
 
 # random repeatable all day
 seed(localtime().tm_yday)
@@ -25,10 +26,6 @@ _nrandom = 64
 
 def _anyNAN(t):
     return any(map(_isNAN, t))
-
-
-def _isNAN(x):
-    return x is NAN
 
 
 def _rnd(f):
@@ -169,10 +166,12 @@ class Tests(TestsBase):
             e = max(fabs(t.easting  - r.easting),
                     fabs(t.northing - r.northing))
             self.test('forward', t, r, error=e, known=e < 0.0007)
+            self.test('hBGh', B.hBGh(lat, lon), t.N, known=_isNAN(t.N))
             t = B.reverse(x, y, NAN).dup(beLBG=None)  # ignore beLBG
             e = max(fabs(t.lat - r.lat),
                     fabs(t.lon - r.lon))
             self.test('reverse', t, r, error=e, known=e < 1e-10)
+            self.test('hBGh3.N', B.hBGh3(x, y).N, t.N, known=_isNAN(t.N))
 
     def testRndTrip(self, B, lat, lon, h=NAN, eas_nor=None):
         llh = lat, lon, h
@@ -220,6 +219,7 @@ class Tests(TestsBase):
                      ('latlonheight', 'Uccle'),
                      ('latlonheightdatum', 'Uccle'),
                      ('latlonNgeoid', 'Uccle'),
+                     ('N', 'N'),
                      ('northing', 'northing'),
                      ('phi', 'lat'),  # phi?
                      ('philam', 'Uccle'),
