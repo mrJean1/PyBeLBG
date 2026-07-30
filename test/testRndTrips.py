@@ -53,22 +53,22 @@ class Tests(TestsBase):
         t = B.bounds4(True).toRepr()
         self.test(B.name, t, t, nt=1)
 
-        self.test(B.name, 'Antwerp', 'Antwerp')
-        self.testRndTrip(B, 51.21989, 4.40346,
+        self.test(B.name, 'Antwerp', 'Antwerp')  # ISG -42.383 <https://www.ISGeoid.PoliMi.IT/Geoid/height_conversion.html>
+        self.testRndTrip(B, 51.21989, 4.40346,  # .H = -42.383352
                             eas_nor='(652419.16905189, 712216.88762658)')
         U = B.Uccle
         self.test(B.name, U.name, U.name)
         self.testRndTrip(B, U.lat, U.lon, U.height,
                             eas_nor=U.eastingnorthing.toStr(prec=8))
-        self.test(B.name, 'Maastricht', 'Maastricht')
-        self.testRndTrip(B, 50.851368, 5.690973,
+        self.test(B.name, 'Maastricht', 'Maastricht')  # ISG -43.382
+        self.testRndTrip(B, 50.851368, 5.690973,  # .H = -43.381897
                             eas_nor='(743103.01343191, 672060.17452257)')
-        self.test(B.name, 'Rotterdam', 'Rotterdam')
-        self.testRndTrip(B, 51.9225, 4.47917,
+        self.test(B.name, 'Rotterdam', 'Rotterdam')  # ISG -41.22
+        self.testRndTrip(B, 51.9225, 4.47917,  # -41.220305
                             eas_nor='(657582.42979196, 790403.36687921)')
         # Z001_ETRS89andRDNAP.txt first point
-        self.test(B.name, 'id 30010000', 'id 30010000')
-        self.testRndTrip(B, 51.728601274, 4.712120126, 301.7981,
+        self.test(B.name, 'id 30010000', 'id 30010000')  # ISG -41.425
+        self.testRndTrip(B, 51.728601274, 4.712120126, 301.7981,  # .H = -41.425494
                             eas_nor='(673714.94919006, 768876.34323137)')  # 258.0057
 
     def testRandom(self, B, **nl):

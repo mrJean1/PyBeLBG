@@ -14,6 +14,8 @@ C{  [ -08 | -72 | -72N | -72R | -50 ] -reverse  <easting> <northing> [ <H> ]}
 C{  [ -08 | -72 | -72N | -72R | -50 ] -Uccle}
 
 C{  [ -08 | -72 | -72N | -72R | -50 ] -Lb4tuple [ <ndigits> ]}
+
+C{  [ -08 | -72 | -72N | -72R | -50 ] -ISG.csv [ <npoints> ]}
 '''
 from pybelbg import (Be08LBG, Be72LBG, Be72NLBG, Be72RLBG, Be50LBG, Lb4Tuple,
                     _pybelbg_, _versions)
@@ -22,9 +24,15 @@ from pygeodesy import Lat, Lon, NAN, print_, truncate, typename
 
 import os
 import sys
+from random import random, seed
+from time import localtime
 
 __all__ = ()
-__version__ = '26.07.27'
+__version__ = '26.07.29'
+
+# random repeatable all day
+seed(localtime().tm_yday)
+del localtime, seed
 
 _Bs = {}
 for _B in (Be08LBG, Be72LBG, Be72NLBG, Be72RLBG, Be50LBG):
@@ -103,8 +111,8 @@ def _usage(x):
     print_(_t, '-forward  <lat> <lon> [ <height> ]')
     print_(_t, '-reverse  <easting> <northing> [ <H> ]')
     print_(_t, '-Uccle')
+    print_(_t, '-ISG.csv [ <npoints> ]')
 #   print_(_t, '-Lb4Tuple [ <ndigits> ]')
-#   print_(_t, '-unzip  [ -force ]')
     sys.exit(x)  # $status
 
 
@@ -142,6 +150,24 @@ while argv and argv[0].startswith(_DASH_):  # MCCABE 13
     elif '-Uccle'.startswith(arg) and larg > 1:
         print_(_B.Uccle.toRepr(prec=_prec))
 
+    elif '-ISG.csv'.startswith(arg) and larg > 3:
+        n = int(argv.pop(0)) if narg > 0 else 1000
+        # <https://www.ISGeoid.PoliMi.IT/Geoid/height_conversion.html>
+        # Data type Quasi-Geoid, Interpolation Bilinear, Model hBG18
+        # and Conversion Ellipsoidal to Normal or - to Orthometric
+        f = 'ISG_%s_lat_lon_0.csv' % (n,)
+        print_(_pybelbg_ + ':', 'writing file', f, '...')
+        with open(f, 'w') as f:
+            S, W, N, E = _B.region4()
+            E_W = E - W
+            N_S = N - S
+            for _ in range(n):
+                f.write('%s,%s,0\n' % (round(random() * N_S + S, _prec),
+                                       round(random() * E_W + W, _prec)))
+
+    elif '-runx'.startswith(arg) and larg > 3:
+        _runx()
+
     elif '-Lb4Tuple'.startswith(arg) and larg > 3:
         n =  int(argv.pop(0)) if narg > 0 else 3
         t = _Lb4Tuple(_B, n)
@@ -149,27 +175,21 @@ while argv and argv[0].startswith(_DASH_):  # MCCABE 13
         t =  t.truncate(n)
         print_(t, n)
 
-    elif '-runx'.startswith(arg) and larg > 3:
-        _runx()
-
-#   elif '-unzip'.startswith(arg) and larg > 3:
-#       from pybelbg.v_grids import _v_gridz_unzip
-#       _f = bool(argv and argv[0] == '-force')
-#       _v_gridz_unzip(_b[2], force=_f, verbose=True)
     else:
         print_('invalid option:', repr(arg))
         _usage(1)
 
 
 # % python3.14 -m pybelbg -v
-# pybelbg 26.7.27 pygeodesy 26.7.27 Python 3.14.6 64bit arm64 macOS 26.5.2
+# pybelbg 26.7.31 pygeodesy 26.7.27 Python 3.14.6 64bit arm64 macOS 26.5.2
 
 
 # % python3.14 -m pybelbg --help
 # usage: python3 -m pybelbg  [ -h | -help ]  [ -v | --version ]  [ -precision <ndigits> ]
 # 	[ -08 | -72 | -72N | -72R | -50 ] -forward  <lat> <lon> [ <height> ]
 # 	[ -08 | -72 | -72N | -72R | -50 ] -reverse  <easting> <northing> [ <H> ]
-#   [ -08 | -72 | -72N | -72R | -50 ] -Uccle
+# 	[ -08 | -72 | -72N | -72R | -50 ] -Uccle
+# 	[ -08 | -72 | -72N | -72R | -50 ] -ISG.csv [ <npoints> ]
 
 
 # % python3.14 -m pybelbg -08 -forward 52.15616 5.3876389

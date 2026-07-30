@@ -11,7 +11,7 @@ from os.path import abspath, dirname, join
 import unittest
 
 __all__ = ('TestSuite',)
-__version__ = '26.07.26'
+__version__ = '26.07.30'
 
 _test_dir = dirname(abspath(__file__))
 
@@ -26,6 +26,9 @@ class TestSuite(unittest.TestCase):
         TestSuite._runs += 1  # pseudo global
         x, _ = run2(join(test_dir, test + '.py'), *argv)
         self.assertEqual(x, 0)
+
+    def test_ISGcsv(self):
+        self._run('testISGcsv')
 
     def test_RndTrips(self):
         self._run('testRndTrips')
