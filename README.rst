@@ -89,7 +89,7 @@ THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
 .. _GitHub: https://GitHub.com/mrJean1/PyBeLBG
 .. _GitHub/dist: https://GitHub.com/mrJean1/PyBeLBG/tree/master/dist
 .. _hBG18: https://DOI.org/10.5880/isg.2018.003
-.. _main: https://GitHub.com/mrJean1/PyBeLBG/blob/main/docs/pybelbg.__main__-module.html
+.. _main: https://mrjean1.github.io/PyBeLBG/docs/pybelbg.__main__-module.html
 .. _McCabe: https://PyPI.org/project/mccabe
 .. _MIT License: https://OpenSource.org/licenses/MIT
 .. _PyChecker: https://PyPI.org/project/pychecker

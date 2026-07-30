@@ -1030,7 +1030,7 @@ running /Library/Framewo....n3.14 -W default ~/PyBeLBG/test/testISGcsv.py
     test 1000 49.656504,5.315151,0,-44.725: 44.725
     test 1001 51.084139,6.668646,0,-43.501: 43.501
 
-    1 of 1001 testISGcsv.py tests (0.1%) FAILED, ALL KNOWN (pybelbg 26.7.31 pygeodesy 26.7.27 Python 3.14.6 64bit arm64 macOS 26.5.2 coverage 7.14.0 -W  default) 30.426 ms
+    1 of 1001 testISGcsv.py tests (0.1%) FAILED, ALL KNOWN (pybelbg 26.7.31 pygeodesy 26.7.27 Python 3.14.6 64bit arm64 macOS 26.5.2 coverage 7.14.0 -W  default) 27.217 ms
 running /Library/Framewo....n3.14 -W default ~/PyBeLBG/test/testRndTrips.py
 # lazily imported pygeodesy.Datums from .datums by __pygeodesy.py line 65
 # lazily imported pygeodesy.Easting from .units by __pygeodesy.py line 65
@@ -3155,6 +3155,6 @@ running /Library/Framewo....n3.14 -W default ~/PyBeLBG/test/testRndTrips.py
     test 1710 reverse: (821539.487, 984316.051, NAN, 53.636667, 6.959472, NAN, None)
     test 1711 hBGh3.N: nan
 
-    88 of 1711 testRndTrips.py tests (5.1%) FAILED, ALL KNOWN (pybelbg 26.7.31 pygeodesy 26.7.27 Python 3.14.6 64bit arm64 macOS 26.5.2 coverage 7.14.0 -W  default) 70.773 ms
+    88 of 1711 testRndTrips.py tests (5.1%) FAILED, ALL KNOWN (pybelbg 26.7.31 pygeodesy 26.7.27 Python 3.14.6 64bit arm64 macOS 26.5.2 coverage 7.14.0 -W  default) 70.745 ms
 
-test/run.py /Library/Framewo....n3.14 -W default: all 2712 tests OK (pybelbg 26.7.31 pygeodesy 26.7.27 Python 3.14.6 64bit arm64 macOS 26.5.2 coverage 7.14.0 -W default) 310.010 ms
+test/run.py /Library/Framewo....n3.14 -W default: all 2712 tests OK (pybelbg 26.7.31 pygeodesy 26.7.27 Python 3.14.6 64bit arm64 macOS 26.5.2 coverage 7.14.0 -W default) 299.779 ms

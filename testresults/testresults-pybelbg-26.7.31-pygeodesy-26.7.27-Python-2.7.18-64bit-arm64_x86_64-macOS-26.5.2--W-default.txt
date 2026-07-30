@@ -1004,7 +1004,7 @@ running /Library/Framewo....ython -W default ~/PyBeLBG/test/testISGcsv.py
     test 1000 49.656504,5.315151,0,-44.725: 44.725
     test 1001 51.084139,6.668646,0,-43.501: 43.501
 
-    1 of 1001 testISGcsv.py tests (0.1%) FAILED, ALL KNOWN (pybelbg 26.7.31 pygeodesy 26.7.27 Python 2.7.18 64bit arm64_x86_64 macOS 26.5.2 -W  default) 56.090 ms
+    1 of 1001 testISGcsv.py tests (0.1%) FAILED, ALL KNOWN (pybelbg 26.7.31 pygeodesy 26.7.27 Python 2.7.18 64bit arm64_x86_64 macOS 26.5.2 -W  default) 52.903 ms
 running /Library/Framewo....ython -W default ~/PyBeLBG/test/testRndTrips.py
 
     testing testRndTrips.py 26.07.29
@@ -3103,6 +3103,6 @@ running /Library/Framewo....ython -W default ~/PyBeLBG/test/testRndTrips.py
     test 1710 reverse: (821539.487, 984316.051, NAN, 53.636667, 6.959472, NAN, None)
     test 1711 hBGh3.N: nan
 
-    88 of 1711 testRndTrips.py tests (5.1%) FAILED, ALL KNOWN (pybelbg 26.7.31 pygeodesy 26.7.27 Python 2.7.18 64bit arm64_x86_64 macOS 26.5.2 -W  default) 156.681 ms
+    88 of 1711 testRndTrips.py tests (5.1%) FAILED, ALL KNOWN (pybelbg 26.7.31 pygeodesy 26.7.27 Python 2.7.18 64bit arm64_x86_64 macOS 26.5.2 -W  default) 155.363 ms
 
-test/run.py /Library/Framewo....ython -W default: all 2712 tests OK (pybelbg 26.7.31 pygeodesy 26.7.27 Python 2.7.18 64bit arm64_x86_64 macOS 26.5.2 -W default) 519.821 ms
+test/run.py /Library/Framewo....ython -W default: all 2712 tests OK (pybelbg 26.7.31 pygeodesy 26.7.27 Python 2.7.18 64bit arm64_x86_64 macOS 26.5.2 -W default) 517.512 ms
