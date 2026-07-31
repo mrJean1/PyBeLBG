@@ -119,6 +119,14 @@ class BeLBG7Tuple(_NamedTuple):
         '''
         return EasNorH3Tuple(self.easting, self.northing, self.H, name=self.name)
 
+#   def isinside2(self, asLb=False):
+#       '''Return 2-tuple C{(region4, bounds4)}, each C{True} if this point is
+#          inside this C{region4} respectively C{bounds4} otherwise C{False}.
+#       '''
+#       t = (self.easting, self.northing) if asLB else (self.lat, self.lon)
+#       return (self.beLBG.region4(asLb)(*t),
+#               self.beLBG.bounds4(asLb)(*t))
+
     @Property_RO
     def lam(self):
         '''Get the longitude (B{C{radians}}).
@@ -255,8 +263,8 @@ class Lb4Tuple(_NamedTuple):
            @arg northing: Northing (C{meter}).
            @kwarg eps: Over-/undersize the C{Lb} bounds (C{meter}).
 
-           @return: C{False} if B{C{easting}} or B{C{northing}} is outsize
-                    these C{Lb} bounds or C{NAN}, C{True} otherwise.
+           @return: C{False} if B{C{easting}} or B{C{northing}} is C{NAN}
+                    or outsize these C{Lb} bounds, C{True} otherwise.
         '''
         z = Meter(eps=eps) if eps else 0
         return _isinside(Easting(easting), Northing(northing), z, self)

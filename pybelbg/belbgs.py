@@ -32,12 +32,12 @@ from pygeodesy import (typename, NAN, NN,  # "consterns"
 from math import ceil, floor
 
 __all__ = ()
-__version__ = '26.07.28'
+__version__ = '26.07.31'
 
 _bounds__   = ' bounds '
 _forward_   = 'forward'
 _outside__  = 'outside '
-_region4hBG =  Bounds4Tuple(48.5, 1.0, 52.5, 7.0, name='hBG region ')  # <https://EPSG.io/4937>
+_region4hBG =  Bounds4Tuple(48.5, 1.0, 52.5, 7.0, name='hBG18 region ')  # <https://EPSG.io/4937>
 _reverse_   = 'reverse'
 _Uccle_     = 'Uccle'  # PYCHOK == _BelBGbase.Uccle.name
 
@@ -47,20 +47,18 @@ class _BeLBGbase(_NamedBase):
     '''
     _bounds2 = None  # overloaded
     _conic   = None  # overloaded
-    _latD    = Lat(latD=36 / _3600_0)  # 36"
-    _lonD    = Lon(lonD=54 / _3600_0)  # 54"
+    _latD    = Lat(latD=36 / _3600_0)  # 36" in degrees
+    _lonD    = Lon(lonD=54 / _3600_0)  # 54" in degrees
     _raiser  = False
 
     def __init__(self, datum=None, raiser=False, **name):
-        '''New C{Be*LBG} instance, optionally with a different C{conic}'s datum.
+        '''New C{Be*LBG} transformer instance, optionally with a different C{conic}'s datum.
 
-           @kwarg datum: Conic's datum to use (C{pygeodesy.Datums}, ellipsoidal only).
+           @kwarg datum: Conic's datum to use (C{pygeodesy.Datums}, I{ellipsoidal} only).
            @kwarg raiser: If C{True} raise a L{BeLBGError} for lat- or longitudes
                           outside L{region4} or below L{bounds4} (C{bool}).
-           @kwarg name: Optional name C{B{name}='Be*LBG'} (C{str}).
+           @kwarg name: Optional name C{B{name}=NN} (C{str}).
         '''
-        if name:  # typename(self)
-            self.name = name
         if datum:
             c = self._conic.toDatum(datum)
             if self._conic is not c:
@@ -73,6 +71,8 @@ class _BeLBGbase(_NamedBase):
 #           T = self.datum.transform
 #           if not T.isunity:
 #               raise BeLBGError(repr(T), txt='not unity')
+        if name:
+            self.name = name  # or typename(self)
 
     def _as4Lb(self, t4, name=NN):
         # return C{t4} as L{Lb4Tuple}
@@ -264,9 +264,7 @@ class _BeLBGbase(_NamedBase):
            @return: C{None} if B{C{lat}} or B{C{lon}} is NAN, C{False}
                     if outside the C{hBG} region, C{True} otherwise.
 
-           @see: Method C{isinside} of L{bounds4<_BeLBGbase.bounds4>},
-                 L{region4<_BeLBGbase.region4>} and L{bounds4(asLb)
-                 <Lb4Tuple.isinside>}, L{region4(asLB)<Lb4Tuple.isinside>}
+           @see: Methods C{Bounds4Tuple.isinside} and L{Lb4Tuple.isinside}.
         '''
         lat, lon, _NAN, _, _ = self._LatLon5(lat, lon, False)
         return None if _NAN else _isinside(lat, lon, Degrees(eps=eps),
@@ -370,7 +368,7 @@ class _BeLBGbase(_NamedBase):
 
     @property_RO
     def Uccle(self):  # overwrite class.Uccle
-        '''Get C{Uccle<https://ROBinfo.OMA.BE/en/astro-info/geographical-coordinates-of-our-sites>} (aka Ukkel) as L{BelBG7Tuple}.
+        '''Get C{Uccle<https://ROBinfo.OMA.BE/en/astro-info/geographical-coordinates-of-our-sites>} (aka Ukkel) as L{BeLBG7Tuple}.
         '''
         lat, lon, H = self._Uccle3
         h = self.hBGh(lat, lon) + H  # height=147.815887  Be08LBG
@@ -385,9 +383,11 @@ class _BeLBGbase(_NamedBase):
 
 
 class Be08LBG(_BeLBGbase):
-    '''Belgian Lambert 2008 C{pygeodesy.Conics.Be08Lb} converter.
+    '''Belgian Lambert 2008 C{pygeodesy.Conics.Be08Lb} transformer.
     '''
-    _conic = Conics.Be08Lb
+    @property_ROver
+    def _conic(self):
+        return Conics.Be08Lb
 
     @property_ROver
     def _bounds2(self):
@@ -395,9 +395,11 @@ class Be08LBG(_BeLBGbase):
 
 
 class Be72LBG(_BeLBGbase):
-    '''Belgian Lambert 1972 C{pygeodesy.Conics.Be72Lb} converter.
+    '''Belgian Lambert 1972 C{pygeodesy.Conics.Be72Lb} transformer.
     '''
-    _conic = Conics.Be72Lb
+    @property_ROver
+    def _conic(self):
+        return Conics.Be72Lb
 
     @property_ROver
     def _bounds2(self):
@@ -405,9 +407,11 @@ class Be72LBG(_BeLBGbase):
 
 
 class Be72NLBG(_BeLBGbase):
-    '''Belgian Lambert 1972N C{pygeodesy.Conics.Be72NLb} converter.
+    '''Belgian Lambert 1972N C{pygeodesy.Conics.Be72NLb} transformer.
     '''
-    _conic = Conics.Be72NLb
+    @property_ROver
+    def _conic(self):
+        return Conics.Be72NLb
 
     @property_ROver
     def _bounds2(self):
@@ -415,9 +419,11 @@ class Be72NLBG(_BeLBGbase):
 
 
 class Be72RLBG(_BeLBGbase):
-    '''Belgian Lambert 1972R C{pygeodesy.Conics.Be72RLb} converter.
+    '''Belgian Lambert 1972R C{pygeodesy.Conics.Be72RLb} transformer.
     '''
-    _conic = Conics.Be72RLb
+    @property_ROver
+    def _conic(self):
+        return Conics.Be72RLb
 
     @property_ROver
     def _bounds2(self):
@@ -425,9 +431,11 @@ class Be72RLBG(_BeLBGbase):
 
 
 class Be50LBG(_BeLBGbase):
-    '''Belgian Lambert 1950 C{pygeodesy.Conics.Be50Lb} converter.
+    '''Belgian Lambert 1950 C{pygeodesy.Conics.Be50Lb} transformer.
     '''
-    _conic = Conics.Be50Lb
+    @property_ROver
+    def _conic(self):
+        return Conics.Be50Lb
 
     @property_ROver
     def _bounds2(self):
@@ -480,9 +488,9 @@ def _degN(deg, degSW, degD):
 
 _Be5LBGs = Be08LBG, Be72LBG, Be72NLBG, Be72RLBG, Be50LBG
 
-if _FOR_DOCS:
-    # for epydoc to include __doc__ for all classes
-    for B in _Be5LBGs:
+if _FOR_DOCS:  # force epydoc to document all ...
+    for B in _Be5LBGs:  # ... public methods
+        B.__init__ = _BeLBGbase.__init__
         B.bounds4  = _BeLBGbase.bounds4
         B.conic    = _BeLBGbase.conic
         B.datum    = _BeLBGbase.datum
